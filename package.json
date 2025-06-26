@@ -1,0 +1,37 @@
+{
+  "name": "סימולטור-כולל-אפשרות-להוסיף-סוכנים-נוספים",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@google/genai": "^0.9.0",
+    "react": "^19.1.0",
+    "react/jsx-runtime": "^19.1.0",
+    "react-dom/client": "^19.1.0",
+    "lit": "^3.3.0",
+    "@lit/context": "^1.1.5",
+    "three": "^0.176.0",
+    "three/addons/loaders/GLTFLoader.js": "latest",
+    "three/addons/controls/OrbitControls.js": "latest",
+    "three/addons/loaders/EXRLoader.js": "latest",
+    "three/addons/postprocessing/EffectComposer.js": "latest",
+    "three/addons/postprocessing/RenderPass.js": "latest",
+    "three/addons/postprocessing/ShaderPass.js": "latest",
+    "three/addons/postprocessing/UnrealBloomPass.js": "latest",
+    "three/addons/shaders/FXAAShader.js": "latest",
+    "@pixiv/three-vrm": "2.0.11",
+    "react-dom": "^19.1.0",
+    "@/components/TrainerView": "latest",
+    "@/components/TraineeView": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0"
+  }
+}
