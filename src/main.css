@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Base body styling:
+  Tailwind's preflight (imported via @tailwind base) will apply a sensible set of base styles.
+  The dark/light mode background and text colors should ideally be applied to the <html> or <body> tag
+  using Tailwind's dark mode variant (e.g., in App.tsx or index.html based on the theme state).
+  Example if 'dark' class is on <html>: <body class="bg-secondary-50 text-secondary-900 dark:bg-secondary-900 dark:text-secondary-200">
+  The font-family is defined in tailwind.config.js and applied via 'font-sans' class.
+  Ensure your root HTML element or body has the 'font-sans' class.
+*/
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Ensure these are not conflicting with Tailwind's preflight or utility classes applied elsewhere */
+  /* margin: 0; */ /* Handled by preflight */
+  /* line-height: 1.6; */ /* Can be set via text utilities or base style if needed */
+}
+
+#root {
+  height: 100vh; /* Consider if this is always desired, or if min-h-screen on a child is better */
+  overflow-y: auto;
+}
+
+/* Scrollbar styling from original index.html */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+/* Apply theme-aware scrollbar track colors */
+html.dark ::-webkit-scrollbar-track {
+  background: #1e293b; /* secondary-800 */
+  border-radius: 10px;
+}
+html:not(.dark) ::-webkit-scrollbar-track {
+  background: #e2e8f0; /* secondary-200 */
+  border-radius: 10px;
+}
+
+/* Apply theme-aware scrollbar thumb colors */
+html.dark ::-webkit-scrollbar-thumb {
+  background: #334155; /* secondary-700 */
+  border-radius: 10px;
+}
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: #cbd5e1; /* secondary-300 */
+  border-radius: 10px;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569; /* secondary-600 */
+}
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; /* secondary-400 */
+}
+
+/*
+  Regarding .themed-card, .themed-input, .themed-text-*, .themed-border etc.
+  These custom classes that were in the <style> tag of index.html should be refactored.
+  The goal is to use Tailwind utility classes as much as possible for styling.
+
+  For example, a .themed-card in dark mode was:
+    background-color: #1e293b; (secondary-800)
+    color: #e2e8f0; (secondary-200)
+    border: 1px solid #334155; (secondary-700)
+  This should become: class="bg-secondary-800 text-secondary-200 border border-secondary-700 ..." in your JSX,
+  using Tailwind's dark: prefix for light mode overrides if needed, or relying on the global dark class on <html>.
+
+  If there are complex component styles that are hard to achieve with utilities alone,
+  you can define them here using @layer components:
+
+  @layer components {
+    .my-custom-card {
+      @apply bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6;
+    }
+  }
+  And then use class="my-custom-card" in your JSX.
+  This is generally preferred over keeping many global non-Tailwind CSS classes.
+*/

@@ -39,10 +39,15 @@ export function createAudioBlobForLiveAPI(data: Float32Array): InternalGenerativ
   const l = data.length;
   const int16 = new Int16Array(l);
   for (let i = 0; i < l; i++) {
-    // Convert float32 from -1 to 1 range to int16 from -32768 to 32767 range
-    int16[i] = data[i] * 32768;
-    // Clamping might still be a good idea if input can exceed [-1, 1]
-    // int16[i] = Math.max(-32768, Math.min(32767, data[i] * 32768));
+    const val = data[i];
+    if (val >= 1.0) {
+        int16[i] = 32767;
+    } else if (val <= -1.0) {
+        int16[i] = -32768;
+    } else {
+        // Scale and round. Using 32767 for positive scaling ensures it doesn't exceed max positive Int16.
+        int16[i] = Math.round(val * 32767);
+    }
   }
   const uint8Array = new Uint8Array(int16.buffer);
   const base64Data = encode(uint8Array); // Use the existing encode function

@@ -25,9 +25,7 @@
     "three/addons/postprocessing/UnrealBloomPass.js": "latest",
     "three/addons/shaders/FXAAShader.js": "latest",
     "@pixiv/three-vrm": "2.0.11",
-    "react-dom": "^19.1.0",
-    "@/components/TrainerView": "latest",
-    "@/components/TraineeView": "latest"
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

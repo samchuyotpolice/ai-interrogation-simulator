@@ -126,448 +126,42 @@ export const MOCK_FORENSIC_REPORTS: MockPoliceRecord[] = [
 ];
 
 
+import { UI_TEXT } from './constants/uiTexts'; // Import the unified UI_TEXT
+
 // Define role texts as constants outside UI_TEXT to prevent initialization errors
-const ROLE_TEXT_TRAINEE = "חניך";
-const ROLE_TEXT_TRAINER = "מדריך";
-const ROLE_TEXT_SYSTEM_ADMIN = "מנהל מערכת";
+// These are already part of commonTexts.ts and will be available via the merged UI_TEXT
+// const ROLE_TEXT_TRAINEE = "חניך";
+// const ROLE_TEXT_TRAINER = "מדריך";
+// const ROLE_TEXT_SYSTEM_ADMIN = "מנהל מערכת";
 
 
-export const UI_TEXT = {
-  appName: "סימולטור תשאול - מבית ענף שיטור דיגיטלי",
-  loginTitle: "כניסה למערכת",
-  emailLabel: "כתובת אימייל",
-  passwordLabel: "סיסמה",
-  confirmPasswordLabel: "אימות סיסמה",
-  fullNameLabel: "שם מלא",
-  loginButton: "התחבר",
-  signupButton: "צור חשבון",
-  loginWithGoogle: "התחבר עם Google",
-  loginWithApple: "התחבר עם Apple",
-  orSeparator: "או",
-  quickLoginAsDemoUser: "כניסה מהירה כמשתמש דמה:", // New
-  logoutButton: "התנתק",
-  logoutConfirmTitle: "אישור התנתקות", // New
-  logoutConfirmMessage: "האם אתה בטוח שברצונך להתנתק מהמערכת?", // New
-  roleTrainee: ROLE_TEXT_TRAINEE,
-  roleTrainer: ROLE_TEXT_TRAINER,
-  roleSystemAdmin: ROLE_TEXT_SYSTEM_ADMIN,
-  selectRolePrompt: "בחר תפקיד:",
-  errorFieldsMissing: "אנא מלא את כל השדות הנדרשים.",
-  errorLoginFailed: "התחברות נכשלה. אנא בדוק פרטים ונסה שוב.",
-  errorPasswordsDontMatch: "הסיסמאות אינן תואמות.",
-  errorEmailExists: "כתובת אימייל זו כבר קיימת במערכת.",
-  switchToSignup: "אין לך חשבון? צור חשבון חדש",
-  switchToLogin: "יש לך כבר חשבון? התחבר",
+// The main UI_TEXT object is now imported from constants/uiTexts/index.ts
+// All the original UI_TEXT content has been moved to the respective files:
+// - constants/uiTexts/authTexts.ts
+// - constants/uiTexts/commonTexts.ts
+// - constants/uiTexts/traineeTexts.ts
+// - constants/uiTexts/trainerViewTexts.ts
 
-  defaultAgentName: "סימולטור תשאול (ברירת מחדל)",
-  defaultAgentDescription: "הסוכן הסטנדרטי של המערכת לסימולציית תשאול כללית.",
-  defaultAgentId: DEFAULT_AGENT_ID,
-  defaultAgentBasePromptStorageKey: DEFAULT_AGENT_BASE_PROMPT_STORAGE_KEY,
+// The prompt templates are still here as per the revised plan.
+// It is highly recommended to move these to separate files in a `prompts/` directory for better maintainability.
 
-  // Updated Setup Step Titles for the new flow
-  setupStepAgentSelection: "שלב 1: בחר סוכן AI",
-  setupStepInterrogateeRole: "שלב 2: את מי ברצונך לתשאל? (רלוונטי לסוכני תשאול)",
-  setupStepDifficulty: "שלב 3: בחר רמת קושי (רלוונטי לסוכני תשאול)",
-  setupStepTopic: "שלב 4: בחר נושא חקירה (רלוונטי לסוכני תשאול)",
-  setupStepReview: "שלב אחרון: סקירת בחירות ואישור", // Numbering changes based on agent type
+const CRIMINAL_RECORD_TITLE_TEXT = "עבר פלילי:"; // Used in prompts
+const INTEL_TITLE_TEXT = "מידע מודיעיני:"; // Used in prompts
+const EVIDENCE_ITEMS_TITLE_TEXT = "פרטי הראיות:"; // Used in prompts
 
-  selectInterrogateeRole: "בחר את תפקיד הנחקר:",
-  roleSuspect: InterrogateeRole.SUSPECT,
-  roleWitness: InterrogateeRole.WITNESS,
-  roleVictim: InterrogateeRole.VICTIM,
-  selectDifficulty: "בחר רמת קושי:",
-  difficultyEasy: DifficultyLevel.EASY,
-  difficultyMedium: DifficultyLevel.MEDIUM,
-  difficultyHard: DifficultyLevel.HARD,
-  selectTopic: "בחר נושא חקירה או הזן נושא מותאם אישית:",
-  topicPlaceholder: "לדוגמה: אלימות ברשת, הימורים לא חוקיים",
-  customTopicLabel: "נושא מותאם אישית (אם לא נבחר מהרשימה):",
-  selectAIAgent: "בחר את סוכן ה-AI שינהל את האינטראקציה:",
-  // selectedAgentPersonalityTraitsLabel: "תכונות אישיות של הסוכן הנבחר:", // Removed from setup, trainee should not see.
+const feedbackParamContradictionsStr = "הערכת זיהוי סתירות ופרטים מוכמנים"; // Used in prompts
+const feedbackParamEmotionsStr = "הערכת ניהול מצב רגשי"; // Used in prompts
+const feedbackParamEvidenceManagementStr = "הערכת ניהול ראיות"; // Used in prompts
+const feedbackParamConfrontationStr = "הערכת ניהול עימותים ולחץ"; // Used in prompts
+const feedbackParamInterrogationTechniquesStr = "הערכת שימוש בטכניקות תשאול"; // Used in prompts
+const feedbackParamKeyMomentsStr = "זיהוי רגעים מרכזיים בחקירה"; // Used in prompts
+const feedbackParamRapportBuildingStr = "הערכת בניית אמון (Rapport) עם הנחקר"; // Used in prompts
+const feedbackParamPsychologicalTacticsStr = "הערכת שימוש בטכניקות פסיכולוגיות על ידי החוקר"; // Used in prompts
+const feedbackParamCognitiveBiasesStr = "זיהוי הטיות קוגניטיביות אפשריות (חוקר/נחקר)"; // Used in prompts
 
-  confirmAndGenerateScenarioButton: "אשר וצור תרחיש",
-  reviewSelectedAgentLabel: "סוכן AI שנבחר:",
-  reviewSelectedRoleLabel: "תפקיד נחקר שנבחר:",
-  reviewSelectedDifficultyLabel: "רמת קושי שנבחרה:",
-  reviewSelectedTopicLabel: "נושא חקירה שנבחר:",
-  editSelectionsButton: "ערוך בחירות",
-  nextButton: "הבא",
-  backButton: "חזור",
-  generateScenarioButton: "צור תרחיש והתחל סימולציה",
-
-  traineeDashboardTitle: "לוח בקרה חניך",
-  startNewSimulation: "התחל סימולציה חדשה",
-  generatingScenario: "יוצר תרחיש עבורך על בסיס בחירותיך...",
-  caseDetails: "פרטי המקרה",
-  interrogateeProfileTitle: "פרופיל הנחקר",
-  evidenceInHandTitle: "ראיות בידי המשטרה",
-  startInvestigationCall: "התחל חקירה", // For interrogation agents
-  startSessionCall: "התחל סשן", // For non-interrogation agents
-  endInvestigationCall: "סיים חקירה", // For interrogation agents
-  endSessionCall: "סיים סשן", // For non-interrogation agents
-  sendMessage: "שלח",
-  typeYourMessage: "הקלד את הודעתך כאן...",
-  investigationFeedback: "משוב על החקירה",
-  overallScore: "ציון כללי",
-  backToDashboard: "חזרה ללוח הבקרה",
-  confirmEndInvestigation: "האם אתה בטוח שברצונך לסיים את החקירה?",
-  confirmEndSession: "האם אתה בטוח שברצונך לסיים את הסשן?", // New for generic agents
-  investigationEnded: "החקירה הסתיימה.",
-  sessionEndedNoFeedback: "הסשן עם הסוכן הסתיים. משוב אינו רלוונטי לסוג סוכן זה.", // New for generic agents
-  generatingFeedback: "מעבד משוב...",
-  scenarioDetails: "פרטי תרחיש מלאים",
-  agentDetails: "פרטי סוכן", // New for generic agents
-  chatWithSuspect: "שיחה עם הנחקר",
-  chatWithInterrogateeDynamic: (roleOrName: InterrogateeRole | string, isName: boolean = false) =>
-    isName ? `שיחה עם ${roleOrName}` : `שיחה עם ה${roleOrName}`,
-  chatWithAgentDynamic: (agentName: string) => `שיחה עם הסוכן: ${agentName}`, // New for generic agents
-  noScenario: "לא נטען תרחיש.",
-  couldNotLoadScenario: "לא ניתן היה לטעון תרחיש. אנא בדוק בחירות ונסה שוב.",
-  showScenarioDetails: "הצג פרטי תרחיש",
-  hideScenarioDetails: "הסתר פרטי תרחיש",
-  showAgentDetails: "הצג פרטי סוכן", // New for generic agents
-  hideAgentDetails: "הסתר פרטי סוכן", // New for generic agents
-  requestHintButton: "בקש רמז מה-AI", // Updated
-  hintSystemMessagePrefix: "רמז מה-AI", // Updated
-  hintTypeEvidence: "התמקד בראיה",
-  hintTypeSuggestedAction: "פעולה מוצעת",
-  noMoreHints: "אין רמזים נוספים כרגע (פונקציונליות רמזים קיימת עדיין בפיתוח).", // Keep as a fallback
-  generatingHint: "מייצר רמז עבורך...",
-  errorGeneratingHint: "שגיאה ביצירת רמז.",
-  criminalRecordTitle: CRIMINAL_RECORD_TITLE_TEXT,
-  intelTitle: INTEL_TITLE_TEXT,
-  victimDetailsTitle: "פרטי קורבן:",
-  witnessDetailsTitle: "פרטי עדות:",
-  evidenceItemsTitle: EVIDENCE_ITEMS_TITLE_TEXT,
-  caseTypeLabel: "סוג אירוע/עבירה",
-  fullCaseDescriptionLabel: "תיאור מקרה מלא",
-  locationLabel: "מיקום",
-  dateTimeLabel: "תאריך ושעה",
-  interrogateeRoleLabel: "תפקיד הנחקר",
-  profileNameLabel: "שם",
-  profileAgeLabel: "גיל",
-  profileOccupationLabel: "עיסוק",
-  profileAddressLabel: "כתובת",
-  profileCriminalRecordTitleLabel: "כותרת עבר פלילי",
-  profileCriminalRecordDetailsLabel: "פרטי עבר פלילי",
-  profileIntelTitleLabel: "כותרת מידע מודיעיני",
-  profileIntelDetailsLabel: "פרטי מידע מודיעיני",
-  profileVictimDetailsLabel: "פרטי קורבן (אם רלוונטי)",
-  profileWitnessDetailsLabel: "פרטי עדות (אם רלוונטי)",
-  evidenceTitleLabel: "כותרת ראיות",
-  evidenceItemsLabel: "פרטי הראיות (כל פריט בשורה נפרדת)",
-  systemPromptLabel: "הנחיית מערכת מלאה ל-AI",
-  yes: "כן",
-  no: "לא",
-  ok: "אישור",
-  cancel: "ביטול",
-  edit: "ערוך",
-  save: "שמור",
-  delete: "מחק",
-  add: "הוסף",
-  closeButton: "סגור",
-  errorGeneratingScenario: "שגיאה ביצירת התרחיש. נסה שוב מאוחר יותר.",
-  errorMissingSetupSelection: "נא לוודא שנבחרו כל האפשרויות להגדרת הסימולציה.",
-  errorSendingMessage: "שגיאה בשליחת הודעה.",
-  errorStartingChat: "שגיאה בהתחלת הצ'אט.",
-  errorGeneratingFeedback: "שגיאה ביצירת המשוב.",
-  errorApiKeyMissing: "מפתח API של Gemini חסר. הפונקציונליות תהיה מוגבלת.",
-  errorNoCustomAgents: "לא נוצרו סוכני AI מותאמים אישית.",
-  errorLoadingData: "שגיאה בטעינת נתונים.",
-  noDataAvailable: "אין נתונים זמינים להצגה.",
-  investigationLogTitle: "יומן חקירה אישי:", // New
-  investigationLogSearchPlaceholder: "חפש ביומן...", // New
-  investigationLogSearchResults: (count: number) => `${count} מופעים נמצאו.`, // New
-  investigationGoalsTitle: "מטרות חקירה עיקריות:", // New
-  manualScenarioGoalsLabel: "מטרות חקירה (כל מטרה בשורה חדשה):", // New
-  confirmClearLogTitle: "אישור ניקוי יומן", // New for log clearing
-  confirmClearLogMessage: "האם אתה בטוח שברצונך למחוק את כל תוכן היומן הנוכחי? פעולה זו אינה הפיכה.", // New
-
-  manageUsersTab: "ניהול משתמשים",
-  traineeProgressTab: "התקדמות חניכים",
-  settingsSystemTab: "הגדרות מערכת",
-  liveInterventionTab: "התערבות בסימולציה",
-  manageAIAgentsTab: "ניהול סוכני AI",
-  manualScenarioBuilderTab: "בניית תרחישים ידנית", // New Tab
-  addUserButton: "הוסף משתמש חדש",
-  confirmDeleteUserTitle: "אישור מחיקת משתמש",
-  confirmDeleteUserMessage: (name: string) => `האם אתה בטוח שברצונך למחוק את המשתמש ${name}? פעולה זו אינה הפיכה.`,
-  userRole: "תפקיד משתמש",
-  confirmRoleChangeTitle: "אישור שינוי תפקיד", // Added
-  confirmRoleChangeMessage: (name:string, newRole:string) => {
-    let roleDisplay = "";
-    if (newRole === UserRole.TRAINEE) roleDisplay = ROLE_TEXT_TRAINEE;
-    else if (newRole === UserRole.TRAINER) roleDisplay = ROLE_TEXT_TRAINER;
-    else if (newRole === UserRole.SYSTEM_ADMIN) roleDisplay = ROLE_TEXT_SYSTEM_ADMIN;
-    return `האם אתה בטוח שברצונך לשנות את תפקידו של ${name} ל${roleDisplay}?`;
-  },
-  changeRoleTo: "שנה תפקיד ל:",
-
-  editDefaultAgentPromptTitle: "צפה/ערוך הנחיית ברירת מחדל (מקומי)",
-  saveLocalOverrideButton: "שמור הנחיה מקומית",
-  resetToOriginalButton: "שחזר להנחיית מקור",
-  defaultAgentOverrideNotice: "שינוי הנחיה זו יישמר מקומית עבורך (בדפדפן זה) וידרוס את הנחיית ברירת המחדל הנטענת מהמערכת. הנחיית ברירת המחדל המקורית מהקובץ לא תשתנה.",
-  defaultAgentOverrideSaved: "הנחיית ברירת המחדל המקומית נשמרה.",
-  defaultAgentOverrideResetSuccess: "הנחיית ברירת המחדל שוחזרה למקור (השמירה המקומית הוסרה).",
-
-  overallStatsTitle: "סטטיסטיקות כלליות (כלל החניכים)",
-  totalSimulations: "סה\"כ סימולציות שהושלמו",
-  averageScorePrefix: "ממוצע",
-  traineeSpecificStatsTitle: (name: string) => `סטטיסטיקות עבור ${name}`,
-  simulationsCountSuffix: "סימולציות",
-  averageScoreLabel: "ציון ממוצע",
-  scenarioTopic: "נושא חקירה",
-  date: "תאריך",
-  filterByTraineeLabel: "סנן לפי חניך:",
-  allTraineesFilterOption: "כל החניכים",
-
-  feedbackParameterNames: {
-      contradictions: feedbackParamContradictionsStr.replace('הערכת ', ''),
-      emotions: feedbackParamEmotionsStr.replace('הערכת ', ''),
-      evidence: feedbackParamEvidenceManagementStr.replace('הערכת ', ''),
-      confrontation: feedbackParamConfrontationStr.replace('הערכת ', ''),
-      interrogationTechniques: feedbackParamInterrogationTechniquesStr.replace('הערכת ', ''),
-      keyMoments: feedbackParamKeyMomentsStr.replace('זיהוי ', ''),
-      rapportBuilding: feedbackParamRapportBuildingStr.replace('הערכת ', ''),
-      psychologicalTactics: feedbackParamPsychologicalTacticsStr.replace('הערכת ', ''),
-      cognitiveBiases: feedbackParamCognitiveBiasesStr.replace('זיהוי ', ''),
-  },
-  feedbackKeyMomentsTitle: "רגעים מרכזיים בחקירה",
-  aiGeneratedScenariosTitle: "תרחישים שנוצרו על ידי AI",
-  aiScenarioDetailsTitle: "פרטי תרחיש AI",
-  viewButton: "צפה",
-  viewFeedbackButton: "צפה במשוב", // New
-  feedbackDetailsModalTitle: "פרטי משוב AI", // New
-
-  featureLiveAudioToggleLabel: "הפעל שיחה קולית חיה",
-  featureLiveAudioAttempting: "מנסה להפעיל שיחה קולית חיה...",
-  featureLiveAudioStopped: "שיחה קולית חיה הופסקה.",
-  featureLiveAudioErrorGeneric: "שגיאה בשיחה הקולית החיה.",
-  featureLiveAudioErrorMicPermission: "נדחתה גישה למיקרופון. לא ניתן להפעיל שיחה קולית.",
-  featureLiveAudioErrorConnection: "כשל בהתחברות לשירות האודיו של AI.",
-  featureLiveAudioErrorNoScenario: "לא ניתן להפעיל שיחה קולית ללא תרחיש טעון והנחיית מערכת.",
-  featureLiveAudioErrorStartOnlyInInvestigation: "ניתן להפעיל שיחה קולית רק לאחר תחילת החקירה.",
-  featureLiveAudioActiveIndicator: "שיחה קולית חיה פעילה",
-  featureLiveAudioVisualizerStatus: (status: string) => {
-      // Map internal state codes to user-friendly Hebrew text
-      const statusMap: { [key: string]: string } = {
-          idle: "מוכן",
-          requesting_mic: "מבקש גישה למיקרופון...",
-          mic_access_granted: "גישה למיקרופון אושרה",
-          connecting_ai: "מתחבר לשירות AI...",
-          ai_session_open: "מחובר. ניתן לדבר.",
-          streaming_user_audio: "מקליט ושולח אודיו...",
-          playing_ai_audio: "AI מגיב קולית...",
-          processing_ai_message: "מעבד תגובת AI...",
-          error: "שגיאה בשירות הקולי",
-          closing_session: "סוגר חיבור...",
-          ai_sdk_init_failed: "שגיאת אתחול SDK",
-          api_key_missing: "מפתח API חסר",
-          audiocontext_failure: "שגיאת AudioContext",
-          mic_access_denied: "גישה למיקרופון נדחתה",
-          ai_session_connect_failed: "כשל ביצירת סשן AI",
-          audio_send_error: "שגיאה בשליחת אודיו",
-          ai_audio_play_error: "שגיאה בניגון אודיו מה-AI",
-          no_system_prompt: "חסרה הנחיית מערכת ראשונית",
-          api_session_error_callback: "שגיאת סשן API"
-      };
-      return `מצב AI קולי: ${statusMap[status.toLowerCase()] || status}`;
-  },
-
-
-  enableFeatureVoiceInput: "אפשר קלט קולי (מיקרופון)",
-  enableFeatureLivestreamAudio: "אפשר פלט קולי חי (תגובות AI)",
-  enableFeatureAvatar: "אפשר אינטראקציית אווטאר (בקרוב)",
-  featureSpeechNotSupported: "דפדפן זה אינו תומך באופן מלא ב-API זיהוי/סינתזת דיבור. חלק מהפיצ'רים הקוליים לא יהיו זמינים.",
-  featureMicrophonePermissionDenied: "הגישה למיקרופון נדחתה. לא ניתן להשתמש בקלט קולי. אנא אפשר גישה בהגדרות הדפדפן.",
-  featureVoiceInputError: "שגיאה בקלט הקולי",
-  featureVoiceInputListening: "מקשיב...",
-  featureVoiceInputStop: "עצור הקלטה",
-  featureVoiceInputStart: "התחל הקלטה",
-  featureLivestreamAudioNotSupported: "סינתזת דיבור אינה נתמכת בדפדפן זה.",
-  featureAvatarPlaceholder: "אינטראקציית אווטאר תהיה זמינה בקרוב!",
-  comingSoon: "(בקרוב)",
-  suspectBehaviorIndicatorPrefix: "הנחקר:",
-
-
-  selectActiveSessionPlaceholder: "בחר חניך פעיל (סימולציה)...",
-  noActiveSessions: "אין כרגע חניכים בסימולציה פעילה (דמו).",
-  forceEmotionalStateButton: "אכוף מצב רגשי",
-  revealInfoHintButton: "רמוז על מידע",
-  increaseResistanceButton: "הגבר התנגדות",
-  decreaseResistanceButton: "הפחת התנגדות",
-  sendWhisperButton: "שלח 'לחישה' ל-AI",
-  triggerInterruptionButton: "הפעל הפרעה בסימולציה", // New for interruptions
-  interruptionTypeLabel: "סוג הפרעה:", // New
-  interruptionDetailsPlaceholder: "תיאור קצר של ההפרעה (יוצג לחניך)", // New
-  interruptionCommandSentMessage: "פקודת הפרעה נשלחה לסימולציה.", // New
-  enterEmotionalStatePlaceholder: "הזן מצב רגשי (למשל, לחוץ)",
-  enterInfoHintPlaceholder: "הזן רמז מידע קצר",
-  enterWhisperPlaceholder: "הזן הנחיה דיסקרטית ל-AI...",
-  sendCommandButton: "שלח פקודה",
-  commandSentMessage: "פקודה נשלחה לסימולציה.",
-  errorNoSessionSelected: "אנא בחר סימולציה פעילה להתערבות.",
-  trainerChatViewTitle: "תצוגת צ'אט (קריאה בלבד)",
-  refreshChatViewButton: "רענן תצוגת צ'אט",
-  trainerChatViewNoMessages: "לסשן הנבחר אין עדיין היסטוריית שיחה.",
-
-
-  addNewUserModalTitle: "הוספת משתמש חדש",
-  userCreatedSuccessfully: "משתמש נוצר בהצלחה!",
-  errorCreatingUser: "שגיאה ביצירת משתמש. נסה שוב.",
-  deleteUserConfirmationTitle: "אישור מחיקת משתמש",
-  deleteUserConfirmationMessage: (userName: string) => `האם אתה בטוח שברצונך למחוק את המשתמש ${userName}? פעולה זו אינה הפיכה וכל נתוני הסשנים שלו יימחקו.`,
-  userDeletedSuccessfully: "משתמש נמחק בהצלחה.",
-  errorDeletingUser: "שגיאה במחיקת המשתמש.",
-  ariaLabelDeleteUser: (userName: string) => `מחק את המשתמש ${userName}`,
-  ariaLabelEditUserRole: (userName: string) => `ערוך תפקיד עבור המשתמש ${userName}`,
-  ariaLabelCloneAgent: (agentName: string) => `שכפל את הסוכן ${agentName}`,
-  ariaLabelDeleteAgent: (agentName: string) => `מחק את הסוכן ${agentName}`,
-  ariaLabelViewEditAgent: (agentName: string, isDefault: boolean, isEditable: boolean) =>
-    isDefault ? `צפה או ערוך הנחיית ברירת מחדל עבור ${agentName}` :
-    isEditable ? `ערוך את הסוכן ${agentName}` :
-    `צפה בהנחיה עבור הסוכן ${agentName}`,
-
-  // Agent Management Tabs and General UI
-  agentManagementTitle: "ניהול סוכני AI",
-  addNewAgentButton: "הוסף סוכן AI חדש",
-  editAgentButton: "ערוך סוכן AI",
-  viewOrEditDefaultAgentPromptButton: "צפה/ערוך הנחיית ברירת מחדל",
-  cloneAgentButton: "שכפל",
-  clonedAgentNameSuffix: " - העתק",
-  agentModalTitleSettings: "הגדרות סוכן",
-  agentModalTitleAssistant: "מסייע AI ליצירת סוכן",
-  agentModalTitleKnowledge: "ידע (Knowledge)",
-  agentModalTitleConversationStarters: "פותחי שיחה",
-  agentModalTitleCapabilities: "יכולות",
-  agentModalTitleActions: "פעולות",
-
-  // Agent Settings Tab
-  agentNameLabel: "שם הסוכן",
-  agentDescriptionLabel: "תיאור הסוכן",
-  agentBaseSystemPromptLabel: "הנחיית מערכת בסיסית",
-  agentBaseSystemPromptPlaceholder: "אתה עוזר וירטואלי. הנחיה זו יכולה לכלול משתנים כגון {{INTERROGATEE_ROLE}}, {{SCENARIO_DETAILS_FOR_AI}}, {{AI_PERSONALITY_TRAITS_PROMPT_SECTION}}, {{INTERROGATEE_MOTIVATION_HINT}}, {{BEHAVIORAL_DYNAMICS_HINT}}, וכו', בהתאם לסוג הסוכן. עבור סוכן 'תשאול', הנחיה מורכבת יותר נדרשת. עבור 'משימה מותאמת', הנחיה זו עשויה להיות פשוטה יותר. תאר את מטרת הסוכן ואיך עליו להתנהג.",
-  agentPersonalityTraitsLabel: "תכונות אישיות (מופרד בפסיקים)",
-  agentPersonalityTraitsPlaceholder: "למשל: לחוץ, משתף פעולה, עוין",
-  agentTypeLabel: "סוג סוכן", // New
-  agentTypeOptions: { // New
-      interrogation: "סוכן תשאול",
-      information_retrieval: "סוכן אחזור מידע",
-      custom_task: "סוכן משימה מותאמת"
-  },
-  getAgentTypeDisplay: (type: AIAgentType | undefined): string => { // New helper
-    if (!type) return "לא מוגדר";
-    const options = {
-        interrogation: "סוכן תשאול",
-        information_retrieval: "סוכן אחזור מידע",
-        custom_task: "סוכן משימה מותאמת"
-    };
-    return options[type as keyof typeof options] || type;
-  },
-  agentPromptHelpText: "ההנחיה יכולה לכלול את המשתנים הבאים: {{INTERROGATEE_ROLE}}, {{DIFFICULTY_LEVEL}}, {{SCENARIO_DETAILS_FOR_AI}}, {{EVIDENCE_DETAILS_FOR_AI}}, {{TRAINER_INTERVENTION_HINT}}, {{INVESTIGATION_PROGRESS_HINT}}, {{AI_PERSONALITY_TRAITS_PROMPT_SECTION}}, {{INTERROGATEE_MOTIVATION_HINT}}, {{BEHAVIORAL_DYNAMICS_HINT}}.",
-  agentRecommendedModelLabel: "מודל מומלץ (אם לא נבחר, משתמש בברירת מחדל)",
-  agentRecommendedModelPlaceholder: "בחר מודל...",
-  agentDefaultLabel: "(ברירת מחדל - נטען מקובץ)",
-  agentNotDefaultLabel: "(מותאם אישית)",
-  agentNonEditablePrompt: "הנחיית ברירת המחדל אינה ניתנת לעריכה כאן (מלבד הדריסה המקומית). הנחיות של סוכנים שנטענו מקובץ ואינם ברירת מחדל גם אינן ניתנות לעריכה דרך ממשק זה.",
-  agentNonEditableFromFileNotice: "סוכן זה נטען מקובץ ומוגדר כלא ניתן לעריכה. לא ניתן לשנות את פרטיו דרך ממשק זה.",
-  agentEditableFromFileTemporaryNotice: "סוכן זה נטען מקובץ. שינויים שתבצע יישמרו באופן זמני בלבד (בדפדפן זה) ולא ישפיעו על הקובץ המקורי.",
-  agentCreatedSuccessfully: "סוכן AI נוסף ונשמר מקומית.",
-  agentUpdatedSuccessfully: "סוכן AI עודכן ונשמר מקומית.",
-  agentDeletedSuccessfully: "סוכן AI נמחק מהאחסון המקומי.",
-  errorCreatingAgent: "שגיאה בהוספת סוכן AI.",
-  errorUpdatingAgent: "שגיאה בעדכון סוכן AI.",
-  errorDeletingAgent: "שגיאה במחיקת סוכן AI.",
-  viewPromptButton: "צפה בהנחיה",
-  confirmDeleteAgentTitle: "אישור מחיקת סוכן AI",
-  confirmDeleteAgentMessage: (name: string) => `האם אתה בטוח שברצונך למחוק את סוכן ה-AI המותאם אישית "${name}"? פעולה זו תסיר אותו מהאחסון המקומי בדפדפן.`,
-  agentStorageNotice: "שים לב: הוספה ועריכה של סוכנים הנטענים מקובץ (שאינם ברירת מחדל) הן זמניות ולא יישמרו מעבר לרענון הדף.",
-  customAgentStorageNotice: "סוכנים מותאמים אישית שנוצרו כאן יישמרו מקומית בדפדפן זה.",
-  agentPersonalityAwareBadge: "מודע אישיות",
-  agentStatusDefaultFromFile: "ברירת מחדל (מקובץ)",
-  agentStatusCustomLocal: "מותאם אישית (מקומי)",
-  agentStatusFromFile: "נטען מקובץ",
-  agentStatusEditable: "ניתן לעריכה",
-  agentStatusNotEditable: "לא ניתן לעריכה",
-
-  // Agent Assistant Tab
-  agentAssistantDescribeLabel: "תאר את מטרת הסוכן והתנהגותו הרצויה:",
-  agentAssistantGetSuggestionsButton: "קבל הצעות מה-AI",
-  agentAssistantApplySuggestionsButton: "החל הצעות על לשונית 'הגדרות'",
-  agentAssistantRefineInstructionsLabel: "הנחיות נוספות לשיפור ההצעה (אופציונלי):",
-  agentAssistantRefineSuggestionsButton: "שפר הצעות עם AI",
-  agentAssistantWorking: "המסייע עובד... אנא המתן.",
-  agentAssistantSuggestedNameLabel: "שם מוצע:",
-  agentAssistantSuggestedDescriptionLabel: "תיאור מוצע:",
-  agentAssistantSuggestedBasePromptLabel: "הנחיית בסיס מוצעת:",
-  agentAssistantSuggestedPersonalityTraitsLabel: "תכונות אישיות מוצעות:",
-  agentAssistantError: "שגיאה בתקשורת עם מסייע ה-AI. בדוק קונסול או נסה שוב.",
-  agentAssistantNoSuggestions: "המסייע לא הצליח לייצר הצעות עבור התיאור שסופק.",
-
-
-  // Agent Knowledge Tab
-  agentKnowledgeUploadLabel: "העלאת קבצים לידע הסוכן (לא פעיל כרגע, דורש Backend):",
-  agentKnowledgeUploadButton: "בחר קבצים",
-  agentKnowledgeUploadedFilesTitle: "קבצים שהועלו (דמה):",
-  agentKnowledgeNoFiles: "לא הועלו קבצים.",
-  agentKnowledgeBackendNotice: "שימו לב: העלאת קבצים ושמירתם דורשת פיתוח צד-שרת (Backend) וכרגע אינה ממומשת. ממשק זה הוא Placeholder.",
-  
-  // Agent Conversation Starters Tab
-  agentConversationStartersLabel: "הצעות לפתיחת שיחה עם הסוכן (כל הצעה בשורה חדשה):",
-  agentConversationStartersPlaceholder: "לדוגמה:\nמה שלומך היום?\nספר לי על...\nאני צריך עזרה עם...",
-
-  // Agent Capabilities Tab
-  agentCapabilityWebSearchLabel: "חיפוש באינטרנט (לא פעיל)",
-  agentCapabilityImageGenerationLabel: "יצירת תמונות (Imagen)",
-  agentCapabilityToolUsageLabel: "שימוש בכלים מוגדרים",
-
-  // Agent Actions Tab
-  agentActionsAvailableToolsTitle: "כלים זמינים (גלובלי):",
-  agentActionsCustomizationNotice: "ניהול והוספת Actions (כלים) מותאמים אישית לכל סוכן הם תכונה עתידית שתדרוש Backend.",
-
-
-  // Settings Tab Texts
-  dataManagementSectionTitle: "ניהול נתונים מקומיים",
-  clearAllSessionsButton: "נקה את כל סשני החניכים",
-  confirmClearAllSessionsMessage: "האם אתה בטוח שברצונך למחוק את כל נתוני הסשנים של כל החניכים? פעולה זו אינה הפיכה ותמחק את כל היסטוריית הסימולציות והמשובים מ-localStorage.",
-  sessionsClearedSuccessfully: "כל סשני החניכים נמחקו בהצלחה מ-localStorage.",
-  resetDefaultAgentOverrideButton: "אפס הנחיית ברירת מחדל מקומית",
-  confirmResetDefaultAgentOverrideMessage: "האם אתה בטוח שברצונך לאפס את הנחיית ברירת המחדל המקומית? המערכת תחזור להשתמש בהנחיה הנטענת מקובץ ברירת המחדל.",
-  settingsTab_defaultAgentOverrideResetSuccess: "הנחיית ברירת המחדל המקומית אופסה למקור בהצלחה.", // Renamed key for settings tab specific message
-  resetMockUsersButton: "אפס נתוני משתמשים לדוגמה",
-  confirmResetMockUsersMessage: "האם אתה בטוח שברצונך לאפס את כל נתוני המשתמשים לברירת המחדל המקורית? כל המשתמשים הנוכחיים (כולל מדריכים וחניכים שנוספו ידנית) יימחקו ויוחלפו בנתוני ההדגמה.",
-  mockUsersResetSuccess: "נתוני המשתמשים אופסו לברירת המחדל בהצלחה.",
-  apiStatusTitle: "סטטוס חיבורים",
-  apiKeyStatusLabel: "מפתח Google Gemini API:",
-  apiKeyLoaded: "נטען בהצלחה",
-  apiKeyMissing: "חסר/לא נטען (בדוק משתנה סביבה API_KEY)",
-  aiScenariosArchiveTitle: "ארכיון תרחישי AI", // New for settings tab
-  noAiScenariosArchived: "אין תרחישים שמורים בארכיון.", // New
-  manualScenariosTitle: "תרחישים ידניים", // New for Manual Scenario Builder
-  addNewManualScenarioButton: "הוסף תרחיש ידני חדש", // New
-  confirmDeleteManualScenarioMessage: (scenarioName: string) => `האם אתה בטוח שברצונך למחוק את התרחיש הידני "${scenarioName}"?`, // New
-  manualScenarioNameLabel: "שם/סוג תרחיש", // New
-  manualScenarioDescriptionLabel: "תיאור מלא של התרחיש", // New
-  manualScenarioInterrogateeRoleLabel: "תפקיד הנחקר", // Direct value
-  manualScenarioDifficultyLabel: "בחר רמת קושי:", // Direct value
-  manualScenarioTopicLabel: "בחר נושא חקירה או הזן נושא מותאם אישית:", // Direct value
-  manualScenarioCreatedSuccessfully: "תרחיש ידני נוצר ונשמר בהצלחה.", // New
-  manualScenarioDeletedSuccessfully: "תרחיש ידני נמחק בהצלחה.", // New
-  errorCreatingManualScenario: "שגיאה ביצירת תרחיש ידני.", // New
-  errorDeletingManualScenario: "שגיאה במחיקת תרחיש ידני.", // New
-  
-  // For TraineeView live audio feedback
-  liveAudioConnectingMic: "מנסה לקבל גישה למיקרופון...",
-  liveAudioMicAccessSuccess: "התקבלה גישה למיקרופון. ממשיך להתחברות לשירות ה-AI הקולי.",
-  liveAudioConnectingAIService: "מתחבר לשירות ה-AI הקולי...",
-  liveAudioConnectedAIService: "השיחה הקולית החיה מוכנה. ניתן להתחיל לדבר.",
-  liveAudioErrorMicPermissionDetail: "הגישה למיקרופון נדחתה או נכשלה. לא ניתן להפעיל שיחה קולית חיה. בדוק את הרשאות הדפדפן.",
-  liveAudioErrorConnectionDetail: "כשל בהתחברות לשירות ה-AI הקולי. בדוק את חיבור האינטרנט ונסה שוב.",
-  liveAudioErrorGenericDetail: "אירעה שגיאה לא צפויה בשיחה הקולית החיה. נסה להפעיל מחדש.",
-  liveAudioStoppedByUser: "השיחה הקולית החיה הופסקה על ידך.",
-  liveAudioSessionEndedByAI: "סשן השיחה הקולית הסתיים על ידי ה-AI או עקב שגיאה.",
-
-  generateScenarioPrompt: `
+// Prompts are kept here for now, but ideally should be in separate files.
+// TODO: Move these large prompt strings to individual files in a `prompts/` directory.
+const generateScenarioPrompt = `
     אתה מומחה ליצירת תרחישי חקירה מורכבים ומפורטים עבור סימולטור תשאול משטרתי.
     צור תרחיש חקירה עבור התפקיד: {{INTERROGATEE_ROLE}}.
     רמת הקושי של התרחיש צריכה להיות: {{DIFFICULTY_LEVEL}}.
@@ -615,8 +209,8 @@ export const UI_TEXT = {
     הקפד במיוחד על תחביר JSON תקין: כל המחרוזות חייבות להיות עטופות במירכאות כפולות, כל האיברים במערכים (כמו ברשימת הראיות ובמטרות החקירה) חייבים להיות מופרדים בפסיקים (פרט לאחרון), וכל זוגות המפתח-ערך באובייקטים חייבים להיות מופרדים בפסיקים (פרט לאחרון). ודא שאין פסיקים מיותרים בסוף מערכים או אובייקטים.
     השתמש במגוון רחב של שמות פרטיים ושמות משפחה ישראליים, והימנע מחזרה על שמות שכבר השתמשת בהם לאחרונה אם אפשר.
     אל תשתמש בשמות של אנשים מפורסמים, פוליטיקאים או אישי ציבור בתרחיש. כמו כן, הימנע באופן מוחלט מיצירת תרחישים הקשורים באופן ישיר או עקיף לפוליטיקה, לאירועים פוליטיים אקטואליים, למפלגות פוליטיות או לדמויות פוליטיות.
-    `,
-  scenarioSystemPromptTemplate: `
+    `;
+const scenarioSystemPromptTemplate = `
     את/ה סימולטור AI מתקדם המגלם דמות בסימולציית חקירה משטרתית או סוכן AI למשימה כללית.
     {{#if INTERROGATEE_ROLE}}תפקידך בסימולציה זו הוא: {{INTERROGATEE_ROLE}}.{{/if}}
 
@@ -731,8 +325,8 @@ export const UI_TEXT = {
         }
         \`\`\`
     ודא שתחביר ה-JSON תקין לחלוטין בכל תגובה.
-    `,
-  generateFeedbackPromptTemplate: `
+    `;
+const generateFeedbackPromptTemplate = `
     אתה AI מומחה לניתוח תמלילי חקירות משטרתיות ומתן משוב מפורט ומקצועי.
     להלן תמליל שיחת חקירה (בפורמט JSON) בין חוקר (user) לנחקר (ai):
     {{CHAT_TRANSCRIPT_JSON_STRING}}
@@ -768,8 +362,8 @@ export const UI_TEXT = {
     הערך את החוקר באופן אובייקטיבי, בהתבסס על התמליל והקשר החקירה.
     היה ספציפי ככל האפשר במתן דוגמאות מתוך התמליל.
     השב עם אובייקט JSON בלבד.
-    `,
-  generateContextualHintPromptTemplate: `
+    `;
+const generateContextualHintPromptTemplate = `
     אתה AI מסייע בתפקיד מדריך חקירות, הנותן רמזים לחניך במהלך סימולציית תשאול או אינטראקציה עם סוכן AI.
     החניך ביקש רמז. להלן ההקשר:
 
@@ -790,8 +384,8 @@ export const UI_TEXT = {
     השב עם טקסט הרמז בלבד, ללא הקדמות או הסברים נוספים. שמור על עברית תקינה.
     לדוגמה (לתשאול): "נסה לשאול את העד על הרעשים ששמע מכיוון הדירה.", או "האם שמת לב לסתירה בין מה שהחשוד אמר על השעה לבין הראיה שבידך?"
     לדוגמה (לסוכן כללי): "נסה לבקש מהסוכן לסכם את המידע שמצא עד כה.", או "האם יש דרך אחרת לנסח את הבקשה שלך כדי שהסוכן יבין טוב יותר?"
-    `,
-  generateAgentConfigPrompt: `
+    `;
+const generateAgentConfigPrompt = `
     אתה AI מומחה לעיצוב והגדרת סוכני שיחה (AI Agents).
     המשתמש סיפק תיאור של סוכן שהוא רוצה ליצור.
     משימתך היא לנתח את התיאור ולהפיק ממנו את ההגדרות הבאות עבור הסוכן, בפורמט JSON:
@@ -807,8 +401,8 @@ export const UI_TEXT = {
     
     אנא החזר אך ורק אובייקט JSON תקין עם השדות הנ"ל, ללא טקסט מקדים או הערות.
     היה יצירתי אך עקבי עם התיאור.
-  `,
-  refineAgentConfigPrompt: `
+  `;
+const refineAgentConfigPrompt = `
     אתה AI מומחה לעיצוב והגדרת סוכני שיחה (AI Agents).
     קיבלת הגדרות קיימות של סוכן AI, ובקשת שיפור מהמשתמש.
     משימתך היא לנתח את ההגדרות הקיימות ואת בקשת השיפור, ולייצר סט **שלם וחדש** של הגדרות סוכן בפורמט JSON, המשקף את השינויים המבוקשים.
@@ -831,8 +425,18 @@ export const UI_TEXT = {
 
     אנא החזר אך ורק אובייקט JSON תקין ושלם עם כל ארבעת השדות הנ"ל, ללא טקסט מקדים או הערות.
     ודא שההנחיה החדשה (\`baseSystemPrompt\`) עדיין עומדת בכל הדרישות של הנחיית מערכת טובה (זהות, תפקיד, התנהגות, מגבלות, הוראות אבטחה וכו').
-  `
+  `;
+
+// Exporting the prompts so they can be used by GeminiService.ts
+export {
+    generateScenarioPrompt,
+    scenarioSystemPromptTemplate,
+    generateFeedbackPromptTemplate,
+    generateContextualHintPromptTemplate,
+    generateAgentConfigPrompt,
+    refineAgentConfigPrompt
 };
+
 
 // Helper function to load AI agents from a remote JSON file and local storage
 export const loadAiAgents = async (): Promise<LoadedAIAgent[]> => {

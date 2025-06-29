@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import './types'; // Ensure global JSX augmentations from types.ts are loaded
-import { UserRole, User, InvestigationSession, MockTrainee, Scenario, Theme } from './types'; // Import Theme from types.ts
-import { UI_TEXT, MOCK_TRAINEES_DATA, DEFAULT_AGENT_ID } from './constants';
-import PageLayout from './components/PageLayout';
+import { UserRole, User, InvestigationSession, MockTrainee, Scenario, Theme } from '@/types'; // Import Theme from types.ts
+import { UI_TEXT, MOCK_TRAINEES_DATA, DEFAULT_AGENT_ID } from '@/constants';
+import PageLayout from '@/components/PageLayout';
 // The import below uses a correct relative path.
 // The error "The requested module '@/components/TraineeView' does not provide an export named 'default'"
 // suggests that the aliased path '@_BINARY_PATH_SEPARATOR_@components/TraineeView' is being requested by the browser.
@@ -13,11 +13,11 @@ import PageLayout from './components/PageLayout';
 // 2. A misconfiguration in the development server or build tool's path aliasing if one is being used (e.g., Vite, Webpack).
 //    The presence of "vite" and "path" in the importmap (index.html) hints that such tooling might be involved or was previously.
 // 3. The browser attempting to resolve this path without a corresponding entry in the importmap or server-side resolution.
-import TraineeView from './components/TraineeView';
+import TraineeView from '@/components/TraineeView'; // Use alias
 import TrainerView from '@/components/TrainerView'; // Use alias from import map
-import Button from './components/common/Button';
-import Input from './components/common/Input';
-import Modal from './components/common/Modal'; // Import Modal
+import Button from '@/components/common/Button';    // Use alias
+import Input from '@/components/common/Input';      // Use alias
+import Modal from '@/components/common/Modal';      // Use alias
 
 // Theme type is now imported from types.ts
 
